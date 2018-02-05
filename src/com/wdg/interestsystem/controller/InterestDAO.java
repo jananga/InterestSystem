@@ -19,6 +19,6 @@ public interface InterestDAO {
     public boolean updateInterest(Interest interest);
     public Interest searchInterest(int id);
     public boolean deleteInterest(int id);
-    
+    public List fillCustomer();
     public List<Interest> listAll();
 }

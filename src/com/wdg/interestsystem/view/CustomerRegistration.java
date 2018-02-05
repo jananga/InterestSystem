@@ -5,9 +5,18 @@
  */
 package com.wdg.interestsystem.view;
 
-import com.mysql.jdbc.StringUtils;
+import com.wdg.interestsystem.controller.CustomerDAO;
+import com.wdg.interestsystem.controller.CustomerDAOImp;
+import com.wdg.interestsystem.model.Customer;
 import com.wdg.interestsystem.util.NumericFunctions;
+import java.awt.Font;
+import java.util.List;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,6 +29,17 @@ public class CustomerRegistration extends javax.swing.JPanel {
      */
     public CustomerRegistration() {
         initComponents();
+        txtCusId.setVisible(false);
+        customerTable.setSelectionModel(new ForcedListSelectionModel());
+        customerTable.setRowHeight(24);
+        customerTable.setFont(new Font("Dialog", Font.BOLD, 16));
+
+        JTableHeader header = customerTable.getTableHeader();
+        header.setFont(new Font("Dialog", Font.BOLD, 18));
+        //customerTable.setFont(new Font("Serif", Font.BOLD, 20));
+
+        loadList();
+
     }
 
     /**
@@ -37,21 +57,31 @@ public class CustomerRegistration extends javax.swing.JPanel {
         txtName = new javax.swing.JTextField();
         txtTelOne = new javax.swing.JTextField();
         txtTelTwo = new javax.swing.JTextField();
-        btnAdd = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnNew = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnClear = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        customerTable = new javax.swing.JTable();
+        txtCusId = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(102, 102, 255));
         setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setText("Name :");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setText("Tel. No.1 :");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel3.setText("Tel. No.2 :");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtName.addActionListener(new java.awt.event.ActionListener() {
@@ -59,24 +89,24 @@ public class CustomerRegistration extends javax.swing.JPanel {
                 txtNameActionPerformed(evt);
             }
         });
+        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 377, 32));
 
         txtTelOne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        add(txtTelOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 286, 32));
 
         txtTelTwo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        add(txtTelTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 286, 32));
 
-        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAdd.setText("Insert");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setBackground(new java.awt.Color(102, 102, 255));
+        jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
+
+        btnClear.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
-
-        btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnUpdate.setText("Edit");
-
-        btnNew.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnNew.setText("New");
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDelete.setText("Delete");
@@ -86,61 +116,115 @@ public class CustomerRegistration extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtTelTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelOne, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(384, Short.MAX_VALUE))
+        btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnUpdate.setText("Edit");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAdd.setText("Insert");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTelOne, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtTelTwo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(105, 105, 105)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(159, Short.MAX_VALUE))
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
+
+        customerTable.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        customerTable.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Cus ID", "Name", "Tel No 1", "Tel No 2"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        customerTable.setColumnSelectionAllowed(true);
+        customerTable.getTableHeader().setReorderingAllowed(false);
+        customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerTableMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                customerTableMouseEntered(evt);
+            }
+        });
+        jScrollPane1.setViewportView(customerTable);
+        customerTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (customerTable.getColumnModel().getColumnCount() > 0) {
+            customerTable.getColumnModel().getColumn(0).setMinWidth(30);
+            customerTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+            customerTable.getColumnModel().getColumn(0).setMaxWidth(30);
+            customerTable.getColumnModel().getColumn(1).setMinWidth(50);
+            customerTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            customerTable.getColumnModel().getColumn(1).setMaxWidth(150);
+            customerTable.getColumnModel().getColumn(2).setMinWidth(100);
+            customerTable.getColumnModel().getColumn(2).setPreferredWidth(500);
+            customerTable.getColumnModel().getColumn(2).setMaxWidth(500);
+            customerTable.getColumnModel().getColumn(3).setMinWidth(100);
+            customerTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+            customerTable.getColumnModel().getColumn(3).setMaxWidth(200);
+            customerTable.getColumnModel().getColumn(4).setMinWidth(100);
+            customerTable.getColumnModel().getColumn(4).setPreferredWidth(200);
+            customerTable.getColumnModel().getColumn(4).setMaxWidth(200);
+        }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 740, 210));
+        add(txtCusId, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 112, 70, 30));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel4.setText("Customer Management");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 230, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
@@ -148,39 +232,278 @@ public class CustomerRegistration extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+
+        //Deleting an exixting record
+         boolean res = deleteCustomer();
+        if (res) {
+            clear();
+            loadList();
+
+            JOptionPane.showMessageDialog(null, "Record Deleted successfully.");
+
+        } else {
+            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+        }
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        String res = addCustomer();
+        boolean res = addCustomer();
+        if (res) {
+            clear();
+            loadList();
+
+            JOptionPane.showMessageDialog(null, "Record inserted successfully.");
+
+        } else {
+            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+        }
 
     }//GEN-LAST:event_btnAddActionPerformed
+    
 
-    public String addCustomer() {
+    
+    
+    
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+
+        //clear text fields
+        clear();
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
+
+        //Call fill text boxes to on mouse click table
+        fillTextBox();
+    }//GEN-LAST:event_customerTableMouseClicked
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        boolean res = editCustomer();
+        if (res) {
+            clear();
+            loadList();
+
+            JOptionPane.showMessageDialog(null, "Record Updated successfully.");
+
+        } else {
+            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void customerTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseEntered
+        //Call fill text boxes to on mouse click table
+        //fillTextBox();
+    }//GEN-LAST:event_customerTableMouseEntered
+
+    public void fillTextBox() {
+        // Get selected Row Value
+        //JOptionPane.showMessageDialog(null, "Calles");
+        int index = customerTable.getSelectedRow();
+
+        TableModel tbModel = customerTable.getModel();
+
+        int cusID = (int) tbModel.getValueAt(index, 0);
+        String cusName = tbModel.getValueAt(index, 1).toString();
+        //JOptionPane.showMessageDialog(null, "Selected Row cus name: "+cusName);
+
+        String telNo1 = tbModel.getValueAt(index, 2).toString();
+        String telNo2 = tbModel.getValueAt(index, 3).toString();
+
+        //Set values to text Boxes
+        txtCusId.setText(String.valueOf(cusID));
+        txtName.setText(cusName);
+        txtTelOne.setText(telNo1);
+        txtTelTwo.setText(telNo2);
+
+    }
+
+    public void clear() {
+        txtName.setText("");
+        txtTelOne.setText("");
+        txtTelTwo.setText("");
+        txtCusId.setText("");
+
+    }
+
+    public boolean addCustomer() {
+
+        boolean res = false;
+
+        boolean valid = validateFields();
+
+        if (valid) {
+
+            String name = txtName.getText();
+            String telNoOne = txtTelOne.getText().trim();
+            String telNoTwo = txtTelTwo.getText().trim();
+
+            Customer customer = new Customer();
+            customer.setName(name);
+            customer.setTelNoOne(telNoOne);
+            customer.setTelNoTwo(telNoTwo);
+
+            CustomerDAO customerInsert = new CustomerDAOImp();
+            res = customerInsert.insertCustomer(customer);
+
+            // JOptionPane.showMessageDialog(null, "ok");
+        }
+
+        return res;
+
+    }
+
+    public boolean editCustomer() {
+
+        boolean res = false;
+        int cusid = 0;
+
+        if (txtCusId.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Select Customer to Update.");
+
+        } else {
+            cusid = Integer.parseInt(txtCusId.getText());
+
+        }
+
+        boolean valid = validateFields();
+
+        if (valid) {
+
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like to Update the record ?", "Warning", dialogButton);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+
+                String name = txtName.getText();
+                String telNoOne = txtTelOne.getText().trim();
+                String telNoTwo = txtTelTwo.getText().trim();
+
+                Customer customer = new Customer();
+                customer.setId(cusid);
+                customer.setName(name);
+                customer.setTelNoOne(telNoOne);
+                customer.setTelNoTwo(telNoTwo);
+
+                CustomerDAO customerInsert = new CustomerDAOImp();
+                res = customerInsert.updateCustomer(customer);
+            }
+            // JOptionPane.showMessageDialog(null, "ok");
+        }
+
+        return res;
+
+    }
+    
+    
+    public boolean deleteCustomer() {
+
+        boolean res = false;
+        int cusid = 0;
+
+        if (txtCusId.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Select Customer to Delete.");
+
+        } else {
+            
+            
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like to Delete the record ?", "Warning", dialogButton);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+            cusid = Integer.parseInt(txtCusId.getText());
+            
+            CustomerDAO customerInsert = new CustomerDAOImp();
+            res = customerInsert.deleteCustomer(cusid);
+            }
+        }
+        
+        return res;
+    }
+
+    public boolean validateFields() {
+
         String name = txtName.getText();
         String telNoOne = txtTelOne.getText();
         String telNoTwo = txtTelTwo.getText();
 
-        if (NumericFunctions.numberOrNot(telNoOne) && NumericFunctions.numberOrNot(telNoTwo)) {
-            JOptionPane.showMessageDialog(null, "ok");
+        boolean ret = false;
+
+        String regexStr = "^[0-9]{10}$";
+
+        if (name.trim().equals("") || name.matches(".*\\d+.*")) {
+            JOptionPane.showMessageDialog(null, "Enter valid name.");
+            txtName.requestFocus();
+
+        } else if ((!telNoOne.matches(regexStr)) && (!telNoOne.trim().equals(""))) {
+
+            JOptionPane.showMessageDialog(null, "Enter valid Tel No 1.");
+            txtTelOne.requestFocus();
+
+        } else if ((!telNoTwo.matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Enter valid Tel No 2.");
+            txtTelTwo.requestFocus();
+
         } else {
-            
-            
-            JOptionPane.showMessageDialog(null, "Fill Tel. No. Fields In Correct Format.");
+            ret = true;
         }
 
-        return "rr";
+        return ret;
+    }
+
+    public void loadList() {
+
+        CustomerDAO customerList = new CustomerDAOImp();
+
+        List<Customer> list = customerList.listAll();
+
+        DefaultTableModel dtm = (DefaultTableModel) customerTable.getModel();
+
+        dtm.setRowCount(0);
+        int i = 1;
+        for (Customer customer : list) {
+            
+            Object[] obj = {i++, customer.getId(), customer.toString(), customer.getTelNoOne(), customer.getTelNoTwo()};
+            dtm.addRow(obj);
+        }
+
+    }
+    
+
+    public class ForcedListSelectionModel extends DefaultListSelectionModel {
+
+        public ForcedListSelectionModel() {
+            setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        }
+
+        @Override
+        public void clearSelection() {
+        }
+
+        @Override
+        public void removeSelectionInterval(int index0, int index1) {
+        }
 
     }
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JTable customerTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtCusId;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtTelOne;
     private javax.swing.JTextField txtTelTwo;

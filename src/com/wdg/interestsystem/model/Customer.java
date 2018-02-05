@@ -19,6 +19,21 @@ public class Customer {
     /**
      * @return the id
      */
+    
+    /*
+    public Customer(int id, String name, String telNoOne, String telNoTwo) {
+        this.id = id;
+        this.name = name;
+        this.telNoOne = telNoOne;
+        this.telNoTwo = telNoTwo;
+
+    }
+
+    public Customer() {
+    }
+
+    */
+
     public int getId() {
         return id;
     }
@@ -70,11 +85,11 @@ public class Customer {
      */
     public void setTelNoTwo(String telNoTwo) {
         this.telNoTwo = telNoTwo;
-        
+
     }
 
     @Override
     public String toString() {
-        return getName();
+        return this.name;
     }
 }

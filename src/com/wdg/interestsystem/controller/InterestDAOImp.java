@@ -232,4 +232,38 @@ public class InterestDAOImp implements InterestDAO {
         }
     }
 
+    @Override
+    public List fillCustomer() {
+        List<Customer> list = new ArrayList<Customer>();
+
+        try {
+
+            String sql = "SELECT * FROM  `customer`";
+            Connection con = DBConnection.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet res = pst.executeQuery();
+
+            //Fetching the Catagory results
+            while (res.next()) {
+
+                //Create the customer object
+               Customer customer = new Customer();
+                customer.setId(res.getInt("cusID"));
+                customer.setName(res.getString("name"));
+                customer.setTelNoOne(res.getString("telNoOne"));
+                customer.setTelNoTwo(res.getString("telNoTwo"));
+            
+                //Add category to List
+                list.add(customer);
+              //  list.add(new Customer(res.getInt("cusID"), res.getString("name"), res.getString("telNoOne"), res.getString("telNoTwo")));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
+        } finally {
+            return list;
+        }
+    }
+
 }

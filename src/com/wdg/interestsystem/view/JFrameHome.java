@@ -5,7 +5,12 @@
  */
 package com.wdg.interestsystem.view;
 
+import com.wdg.interestsystem.view.Customer.FrameCustomerManagemet;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Window;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,8 +21,46 @@ public class JFrameHome extends javax.swing.JFrame {
     /**
      * Creates new form JFrameHome
      */
+    //Creating the initial requirements
+    GridBagLayout gbl = new GridBagLayout();
+    CustomerRegistration customerManagement;
+    InterestManagement interestManagement;
+    //ExpenceManager exManager;
+
     public JFrameHome() {
         initComponents();
+       this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+
+        
+        customerManagement = new CustomerRegistration();
+        interestManagement = new InterestManagement();
+
+        
+        customerManagement.setLocation(0, 0);
+        customerManagement.setPreferredSize(new Dimension(780, 880));
+
+        interestManagement.setLocation(0, 0);
+        interestManagement.setPreferredSize(new Dimension(960, 880));
+
+        
+        /*
+        customerManagement.setPreferredSize(new Dimension(1000, 1000));
+        setSize(new Dimension(1000, 1000));
+        */
+        dynamicPanel.setLayout(gbl);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+
+        dynamicPanel.add(customerManagement, c);
+
+        c.gridx = 0;
+        c.gridy = 0;
+        dynamicPanel.add(interestManagement, c);
+
+        customerManagement.setVisible(true);
+        interestManagement.setVisible(false);
     }
 
     /**
@@ -29,43 +72,124 @@ public class JFrameHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCusManage = new javax.swing.JButton();
+        leftPanel = new javax.swing.JPanel();
+        btnInterestManagement = new javax.swing.JButton();
+        btnCustomerManagement = new javax.swing.JButton();
+        dynamicPanel = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuFile = new javax.swing.JMenu();
+        menuExit = new javax.swing.JMenuItem();
+        menuManagement = new javax.swing.JMenu();
+        menuCustomerManagement = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnCusManage.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        btnCusManage.setText("Customer Management");
-        btnCusManage.addActionListener(new java.awt.event.ActionListener() {
+        leftPanel.setBackground(new java.awt.Color(102, 0, 102));
+
+        btnInterestManagement.setBackground(new java.awt.Color(153, 51, 255));
+        btnInterestManagement.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnInterestManagement.setText("Interest Managment");
+        btnInterestManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnInterestManagement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCusManageActionPerformed(evt);
+                btnInterestManagementActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(btnCusManage, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(840, Short.MAX_VALUE))
+        btnCustomerManagement.setBackground(new java.awt.Color(153, 51, 255));
+        btnCustomerManagement.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCustomerManagement.setText("Customer Management");
+        btnCustomerManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCustomerManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomerManagementActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
+        leftPanel.setLayout(leftPanelLayout);
+        leftPanelLayout.setHorizontalGroup(
+            leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnInterestManagement, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(leftPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnCustomerManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(btnCusManage, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(472, Short.MAX_VALUE))
+        leftPanelLayout.setVerticalGroup(
+            leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftPanelLayout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addComponent(btnInterestManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(579, Short.MAX_VALUE))
+            .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(leftPanelLayout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addComponent(btnCustomerManagement, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(647, Short.MAX_VALUE)))
         );
+
+        getContentPane().add(leftPanel, java.awt.BorderLayout.LINE_START);
+
+        dynamicPanel.setBackground(new java.awt.Color(153, 0, 153));
+        dynamicPanel.setLayout(new java.awt.GridBagLayout());
+        getContentPane().add(dynamicPanel, java.awt.BorderLayout.CENTER);
+
+        menuFile.setText("Menu");
+
+        menuExit.setText("Exit");
+        menuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExitActionPerformed(evt);
+            }
+        });
+        menuFile.add(menuExit);
+
+        jMenuBar1.add(menuFile);
+
+        menuManagement.setText("Management");
+
+        menuCustomerManagement.setText("Customer Management");
+        menuCustomerManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCustomerManagementActionPerformed(evt);
+            }
+        });
+        menuManagement.add(menuCustomerManagement);
+
+        jMenuBar1.add(menuManagement);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCusManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCusManageActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_btnCusManageActionPerformed
+    private void menuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExitActionPerformed
+        System.exit(0);
+
+    }//GEN-LAST:event_menuExitActionPerformed
+
+    private void menuCustomerManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCustomerManagementActionPerformed
+
+        /*
+        FrameCustomerManagemet frameCustomerManagement = new FrameCustomerManagemet();
+        desktopPane.add(frameCustomerManagement);
+        frameCustomerManagement.setVisible(true);
+         */
+
+    }//GEN-LAST:event_menuCustomerManagementActionPerformed
+
+    private void btnCustomerManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerManagementActionPerformed
+        customerManagement.setVisible(true);
+        interestManagement.setVisible(false);    }//GEN-LAST:event_btnCustomerManagementActionPerformed
+
+    private void btnInterestManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInterestManagementActionPerformed
+        customerManagement.setVisible(false);
+        interestManagement.setVisible(true);    }//GEN-LAST:event_btnInterestManagementActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,6 +227,14 @@ public class JFrameHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCusManage;
+    private javax.swing.JButton btnCustomerManagement;
+    private javax.swing.JButton btnInterestManagement;
+    private javax.swing.JPanel dynamicPanel;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel leftPanel;
+    private javax.swing.JMenuItem menuCustomerManagement;
+    private javax.swing.JMenuItem menuExit;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuManagement;
     // End of variables declaration//GEN-END:variables
 }
