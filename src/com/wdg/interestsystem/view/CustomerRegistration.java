@@ -306,12 +306,12 @@ public class CustomerRegistration extends javax.swing.JPanel {
 
         TableModel tbModel = customerTable.getModel();
 
-        int cusID = (int) tbModel.getValueAt(index, 0);
-        String cusName = tbModel.getValueAt(index, 1).toString();
+        int cusID = (int) tbModel.getValueAt(index, 1);
+        String cusName = tbModel.getValueAt(index, 2).toString();
         //JOptionPane.showMessageDialog(null, "Selected Row cus name: "+cusName);
 
-        String telNo1 = tbModel.getValueAt(index, 2).toString();
-        String telNo2 = tbModel.getValueAt(index, 3).toString();
+        String telNo1 = tbModel.getValueAt(index, 3).toString();
+        String telNo2 = tbModel.getValueAt(index, 4).toString();
 
         //Set values to text Boxes
         txtCusId.setText(String.valueOf(cusID));
