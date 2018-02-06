@@ -40,7 +40,7 @@ public class InterestManagement extends javax.swing.JPanel {
         //  cmbName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         //Set Date chooser Value
-      //  dateChooser.setCurrent();
+        dateChooser.setDate(new Date());
 
         txtID.setVisible(false);
         InterestTable.setSelectionModel(new InterestManagement.ForcedListSelectionModel());
@@ -88,7 +88,7 @@ public class InterestManagement extends javax.swing.JPanel {
         txtID = new javax.swing.JTextField();
         cmbName = new javax.swing.JComboBox();
         btnCalculate = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dateChooser = new com.toedter.calendar.JDateChooser();
 
         setBackground(new java.awt.Color(230, 210, 193));
 
@@ -281,7 +281,7 @@ public class InterestManagement extends javax.swing.JPanel {
                         .addGap(260, 260, 260)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(269, 269, 269))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(255, 255, 255)
@@ -298,7 +298,6 @@ public class InterestManagement extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -314,7 +313,7 @@ public class InterestManagement extends javax.swing.JPanel {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,7 +441,7 @@ public class InterestManagement extends javax.swing.JPanel {
         txtDesc.setText("");
 
         //Set Date chooser Value
-//        dateChooser.setDate(new Date());
+        dateChooser.setDate(new Date());
 
     }
 
@@ -484,7 +483,7 @@ public class InterestManagement extends javax.swing.JPanel {
         String description = txtDesc.getText();
 
         //get Date chooser Value
-//        Date date = dateChooser.getDate();
+        Date date = dateChooser.getDate();
 
         //return value
         boolean ret = false;
@@ -495,11 +494,11 @@ public class InterestManagement extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Select Name to Insert.");
             cmbName.requestFocus();
 
-/*        } else if (!DateFunctions.isDate(date)){//(!telNoOne.matches(regexStr)) && (!telNoOne.trim().equals(""))) 
+        } else if (!DateFunctions.isDate(date)){//(!telNoOne.matches(regexStr)) && (!telNoOne.trim().equals(""))) 
        
             JOptionPane.showMessageDialog(null, "Enter valid Date.");
             dateChooser.requestFocus();
-*/
+
         } else if ((!NumericFunctions.numberOrNot(amount))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
             JOptionPane.showMessageDialog(null, "Enter valid Amount.");
             txtAmount.requestFocus();
@@ -529,7 +528,7 @@ public class InterestManagement extends javax.swing.JPanel {
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox cmbName;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
