@@ -42,7 +42,7 @@ public class InterestDAOImp implements InterestDAO {
             ps.setInt(1, interest.getCustomer().getId());
             ps.setDate(2, (Date) interest.getDate());
             ps.setDouble(3, interest.getAmount());
-            ps.setFloat(4, interest.getInterest());
+            ps.setDouble(4, interest.getInterest());
             ps.setDouble(5, interest.getInstallment());
             ps.setString(6, interest.getDescription());
             //Executing the prepared statement
@@ -82,7 +82,7 @@ public class InterestDAOImp implements InterestDAO {
             ps.setInt(1, interest.getCustomer().getId());
             ps.setDate(2, interest.getDate());
             ps.setDouble(3, interest.getAmount());
-            ps.setFloat(4, interest.getInterest());
+            ps.setDouble(4, interest.getInterest());
             ps.setDouble(5, interest.getInstallment());
             ps.setString(6, interest.getDescription());
             ps.setInt(7, interest.getId());

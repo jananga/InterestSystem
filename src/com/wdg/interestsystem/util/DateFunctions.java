@@ -28,6 +28,8 @@ public class DateFunctions {
         System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
         return date;
     }
+    
+    
 
     public static boolean isDate(Date date) {
         boolean ret = true;

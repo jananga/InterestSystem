@@ -18,7 +18,7 @@ public class Interest {
    private int id;
    private Date date;
    private double amount;
-   private float interest;
+   private double interest;
    private double installment;
    private String description;
 
@@ -81,14 +81,14 @@ public class Interest {
     /**
      * @return the interest
      */
-    public float getInterest() {
+    public double getInterest() {
         return interest;
     }
 
     /**
      * @param interest the interest to set
      */
-    public void setInterest(float interest) {
+    public void setInterest(double interest) {
         this.interest = interest;
     }
 
