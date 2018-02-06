@@ -5,11 +5,9 @@
  */
 package com.wdg.interestsystem.view;
 
-import com.wdg.interestsystem.view.Customer.FrameCustomerManagemet;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Window;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 /**
@@ -36,13 +34,18 @@ public class JFrameHome extends javax.swing.JFrame {
         customerManagement = new CustomerRegistration();
         interestManagement = new InterestManagement();
 
+       // dynamicPanel.setLayout(new BoxLayout(dynamicPanel, BoxLayout.Y_AXIS));
+        //customerManagement.setBounds(0,0,400,400);
+
         
+        /*
         customerManagement.setLocation(0, 0);
-        customerManagement.setPreferredSize(new Dimension(780, 880));
+        customerManagement.setPreferredSize(new Dimension(900, 880));
 
         interestManagement.setLocation(0, 0);
         interestManagement.setPreferredSize(new Dimension(960, 880));
 
+        */
         
         /*
         customerManagement.setPreferredSize(new Dimension(1000, 1000));
@@ -84,10 +87,11 @@ public class JFrameHome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        leftPanel.setBackground(new java.awt.Color(102, 0, 102));
+        leftPanel.setBackground(new java.awt.Color(214, 209, 205));
 
-        btnInterestManagement.setBackground(new java.awt.Color(153, 51, 255));
+        btnInterestManagement.setBackground(new java.awt.Color(175, 164, 154));
         btnInterestManagement.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnInterestManagement.setForeground(new java.awt.Color(108, 91, 84));
         btnInterestManagement.setText("Interest Managment");
         btnInterestManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnInterestManagement.addActionListener(new java.awt.event.ActionListener() {
@@ -96,8 +100,9 @@ public class JFrameHome extends javax.swing.JFrame {
             }
         });
 
-        btnCustomerManagement.setBackground(new java.awt.Color(153, 51, 255));
+        btnCustomerManagement.setBackground(new java.awt.Color(175, 164, 154));
         btnCustomerManagement.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCustomerManagement.setForeground(new java.awt.Color(108, 91, 84));
         btnCustomerManagement.setText("Customer Management");
         btnCustomerManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnCustomerManagement.addActionListener(new java.awt.event.ActionListener() {
@@ -135,8 +140,7 @@ public class JFrameHome extends javax.swing.JFrame {
 
         getContentPane().add(leftPanel, java.awt.BorderLayout.LINE_START);
 
-        dynamicPanel.setBackground(new java.awt.Color(153, 0, 153));
-        dynamicPanel.setLayout(new java.awt.GridBagLayout());
+        dynamicPanel.setBackground(new java.awt.Color(230, 210, 193));
         getContentPane().add(dynamicPanel, java.awt.BorderLayout.CENTER);
 
         menuFile.setText("Menu");

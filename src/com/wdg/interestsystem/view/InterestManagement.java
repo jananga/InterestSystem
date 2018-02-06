@@ -5,15 +5,21 @@
  */
 package com.wdg.interestsystem.view;
 
+import com.wdg.interestsystem.controller.CustomerDAO;
+import com.wdg.interestsystem.controller.CustomerDAOImp;
 import com.wdg.interestsystem.controller.InterestDAO;
 import com.wdg.interestsystem.controller.InterestDAOImp;
 import com.wdg.interestsystem.model.Customer;
 import com.wdg.interestsystem.model.Interest;
+import com.wdg.interestsystem.util.DateFunctions;
+import com.wdg.interestsystem.util.NumericFunctions;
 import java.awt.Font;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.JTableHeader;
 
@@ -26,15 +32,15 @@ public class InterestManagement extends javax.swing.JPanel {
     /**
      * Creates new form InterestManagement
      */
-    
     DefaultComboBoxModel customerModel = new DefaultComboBoxModel();
 
     public InterestManagement() {
         initComponents();
-   //  cmbName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        //  cmbName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        //Set Date chooser Value
+        dateChooser.setDate(new Date());
 
-        
         txtID.setVisible(false);
         InterestTable.setSelectionModel(new InterestManagement.ForcedListSelectionModel());
         InterestTable.setRowHeight(24);
@@ -46,8 +52,8 @@ public class InterestManagement extends javax.swing.JPanel {
 
         //Fill the name combo box
         fillCombobox();
-        
-       // loadList();
+
+        // loadList();
     }
 
     /**
@@ -67,7 +73,6 @@ public class InterestManagement extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtTelOne = new javax.swing.JTextField();
         txtInstallment = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -81,15 +86,20 @@ public class InterestManagement extends javax.swing.JPanel {
         InterestTable = new javax.swing.JTable();
         txtID = new javax.swing.JTextField();
         cmbName = new javax.swing.JComboBox();
+        dateChooser = new com.toedter.calendar.JDateChooser();
 
-        setBackground(new java.awt.Color(0, 102, 102));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setBackground(new java.awt.Color(230, 210, 193));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 255));
+        jPanel1.setBackground(new java.awt.Color(214, 209, 205));
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
 
         btnNew.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnNew.setText("New");
+        btnNew.setText("Clear");
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDelete.setText("Delete");
@@ -114,8 +124,8 @@ public class InterestManagement extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,67 +133,50 @@ public class InterestManagement extends javax.swing.JPanel {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, -1, 100));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel3.setText("Description :");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 130, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setText("Date :");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 70, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setText("Interest Management");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 200, 40));
-
-        txtTelOne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtTelOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, 286, 32));
 
         txtInstallment.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtInstallment, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 286, 32));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel4.setText("Amount :");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 90, 40));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel5.setText("Interest :");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 90, 40));
 
         txtAmount.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 286, 32));
 
         txtInterest.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtInterest, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 286, 32));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel6.setText("Installment :");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 130, 30));
 
         txtDesc.setColumns(20);
         txtDesc.setRows(5);
         jScrollPane1.setViewportView(txtDesc);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 360, -1));
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel7.setText("Name :");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 70, 30));
 
         InterestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,11 +222,103 @@ public class InterestManagement extends javax.swing.JPanel {
             InterestTable.getColumnModel().getColumn(6).setMaxWidth(320);
         }
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 660, 920, 210));
-        add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 150, 90, -1));
-
         cmbName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(cmbName, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 460, 30));
+
+        dateChooser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(230, 230, 230)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(17, 17, 17)
+                                    .addComponent(txtInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(190, 190, 190)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(27, 27, 27)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(250, 250, 250)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(cmbName, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(210, 210, 210))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -241,8 +326,26 @@ public class InterestManagement extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+          boolean res = addInterest();
+        if (res) {
+            clear();
+            //loadList();
 
+            JOptionPane.showMessageDialog(null, "Record inserted successfully.");
+
+        } else {
+            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+        }
+        
+        
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+
+        //Clear text fields
+        clear();
+    }//GEN-LAST:event_btnNewActionPerformed
 
     private void loadList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -251,23 +354,21 @@ public class InterestManagement extends javax.swing.JPanel {
     private void fillCombobox() {
 
         //Clear combobox
-     cmbName.removeAllItems();
-     cmbName.addItem("Select Category");
+        cmbName.removeAllItems();
+        cmbName.addItem("Select Customer");
         InterestDAO intImp = new InterestDAOImp();
 
         List<Customer> list = intImp.fillCustomer();
-        
+
         //cmbName.setModel(new javax.swing.DefaultComboBoxModel());
-
-       // customerModel.removeAllElements();
+        // customerModel.removeAllElements();
         //Add data to combo box
-       for (Customer result : list){
-           //customerModel.addElement(result);
+        for (Customer result : list) {
+            //customerModel.addElement(result);
             cmbName.addItem(result);
-           }
+        }
 
-       //cmbName.setModel(customerModel);
-
+        //cmbName.setModel(customerModel);
     }
 
     public class ForcedListSelectionModel extends DefaultListSelectionModel {
@@ -286,6 +387,94 @@ public class InterestManagement extends javax.swing.JPanel {
 
     }
 
+    //Clear fields
+    public void clear() {
+        this.fillCombobox();
+        txtAmount.setText("");
+        txtInterest.setText("");
+        txtInstallment.setText("");
+        txtDesc.setText("");
+
+        //Set Date chooser Value
+        dateChooser.setDate(new Date());
+
+    }
+
+     public boolean addInterest() {
+
+        boolean res = false;
+
+        boolean valid = validateFields();
+
+        /*
+        if (valid) {
+
+            String name = txtName.getText();
+            String telNoOne = txtTelOne.getText().trim();
+            String telNoTwo = txtTelTwo.getText().trim();
+
+            Customer customer = new Customer();
+            customer.setName(name);
+            customer.setTelNoOne(telNoOne);
+            customer.setTelNoTwo(telNoTwo);
+
+            CustomerDAO customerInsert = new CustomerDAOImp();
+            res = customerInsert.insertCustomer(customer);
+
+            // JOptionPane.showMessageDialog(null, "ok");
+        }
+        */
+        return res;
+
+    }
+    
+     
+     public boolean validateFields() {
+
+        String name = cmbName.getSelectedItem().toString();
+        String amount = txtAmount.getText();
+        String interest = txtInterest.getText();
+        String installment = txtInstallment.getText();
+        String description = txtDesc.getText();
+
+        //get Date chooser Value
+        Date date = dateChooser.getDate();
+
+        //return value
+        boolean ret = false;
+
+        String regexStr = "^[0-9]{10}$";
+
+        if (name.trim().equals("Select Customer")) {// || name.matches(".*\\d+.*")
+            JOptionPane.showMessageDialog(null, "Select Name to Insert.");
+            cmbName.requestFocus();
+
+        } else if (!DateFunctions.isDate(date)){//(!telNoOne.matches(regexStr)) && (!telNoOne.trim().equals(""))) 
+       
+            JOptionPane.showMessageDialog(null, "Enter valid Date.");
+            dateChooser.requestFocus();
+
+        } else if ((!NumericFunctions.numberOrNot(amount))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Enter valid Amount.");
+            txtAmount.requestFocus();
+
+        } else if ((!NumericFunctions.intOrNot(interest))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Enter valid Interest.");
+            txtInterest.requestFocus();
+
+        } else if (installment.equals("")){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Enter valid Details.");
+            txtAmount.requestFocus();
+
+        } else {
+            ret = true;
+        }
+
+        return ret;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable InterestTable;
     private javax.swing.JButton btnAdd;
@@ -293,6 +482,7 @@ public class InterestManagement extends javax.swing.JPanel {
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox cmbName;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -308,6 +498,5 @@ public class InterestManagement extends javax.swing.JPanel {
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtInstallment;
     private javax.swing.JTextField txtInterest;
-    private javax.swing.JTextField txtTelOne;
     // End of variables declaration//GEN-END:variables
 }

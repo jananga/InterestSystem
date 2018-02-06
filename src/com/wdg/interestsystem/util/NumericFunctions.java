@@ -15,6 +15,19 @@ public class NumericFunctions {
 	{
 		try
 		{
+			Double.parseDouble(input);
+		}
+		catch(NumberFormatException ex)
+		{
+			return false;
+		}
+		return true;
+	}
+   
+    public static boolean intOrNot(String input)
+	{
+		try
+		{
 			Integer.parseInt(input);
 		}
 		catch(NumberFormatException ex)
