@@ -87,6 +87,7 @@ public class InterestManagement extends javax.swing.JPanel {
         txtID = new javax.swing.JTextField();
         cmbName = new javax.swing.JComboBox();
         dateChooser = new com.toedter.calendar.JDateChooser();
+        btnCalculate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(230, 210, 193));
 
@@ -226,6 +227,14 @@ public class InterestManagement extends javax.swing.JPanel {
 
         dateChooser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        btnCalculate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCalculate.setText("Calculate");
+        btnCalculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalculateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,7 +245,7 @@ public class InterestManagement extends javax.swing.JPanel {
                         .addGap(120, 120, 120)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createSequentialGroup()
                             .addGap(230, 230, 230)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -251,7 +260,10 @@ public class InterestManagement extends javax.swing.JPanel {
                                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(190, 190, 190)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(14, 14, 14))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,8 +272,10 @@ public class InterestManagement extends javax.swing.JPanel {
                                             .addGap(27, 27, 27)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(txtInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnCalculate, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(250, 250, 250)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,7 +322,9 @@ public class InterestManagement extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCalculate)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,6 +362,32 @@ public class InterestManagement extends javax.swing.JPanel {
         //Clear text fields
         clear();
     }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateActionPerformed
+
+        //Get values to calculate Interest
+        String amount = txtAmount.getText();
+        String interest = txtInterest.getText();
+        txtInstallment.setText("");
+        
+        
+        if ((!NumericFunctions.numberOrNot(amount))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Enter valid Amount.");
+            txtAmount.requestFocus();
+
+        } else if ((!NumericFunctions.numberOrNot(interest))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Enter valid Interest.");
+            txtInterest.requestFocus();
+
+        }else{
+        
+            double instalment = Double.parseDouble(amount) * Double.parseDouble(interest) * 0.01;
+        //txtInstallment.setText((String.valueOf(instalment));
+        
+        }
+        
+        
+    }//GEN-LAST:event_btnCalculateActionPerformed
 
     private void loadList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -458,12 +500,12 @@ public class InterestManagement extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Enter valid Amount.");
             txtAmount.requestFocus();
 
-        } else if ((!NumericFunctions.intOrNot(interest))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
+        } else if ((!NumericFunctions.numberOrNot(interest))){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
             JOptionPane.showMessageDialog(null, "Enter valid Interest.");
             txtInterest.requestFocus();
 
         } else if (installment.equals("")){//matches(regexStr)) && (!telNoTwo.trim().equals(""))) {
-            JOptionPane.showMessageDialog(null, "Enter valid Details.");
+            JOptionPane.showMessageDialog(null, "Please calculate Installment.");
             txtAmount.requestFocus();
 
         } else {
@@ -478,6 +520,7 @@ public class InterestManagement extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable InterestTable;
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnCalculate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUpdate;
