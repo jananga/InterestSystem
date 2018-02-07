@@ -280,7 +280,7 @@ public class CustomerRegistration extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
         //Deleting an exixting record
-         boolean res = deleteCustomer();
+        boolean res = deleteCustomer();
         if (res) {
             clear();
             loadList();
@@ -291,28 +291,31 @@ public class CustomerRegistration extends javax.swing.JPanel {
             // JOptionPane.showMessageDialog(null, "Record insertion fail..");
 
         }
-        
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        boolean res = addCustomer();
-        if (res) {
-            clear();
-            loadList();
 
-            JOptionPane.showMessageDialog(null, "Record inserted successfully.");
-
+        String id = txtCusId.getText();
+        if (!id.equals("")) {
+            JOptionPane.showMessageDialog(null, "Record already Inserted.");
         } else {
-            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
 
+            boolean res = addCustomer();
+            if (res) {
+                clear();
+                loadList();
+
+                JOptionPane.showMessageDialog(null, "Record inserted successfully.");
+
+            } else {
+                // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+            }
         }
-
     }//GEN-LAST:event_btnAddActionPerformed
-    
 
-    
-    
-    
+
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
 
         //clear text fields
@@ -443,8 +446,7 @@ public class CustomerRegistration extends javax.swing.JPanel {
         return res;
 
     }
-    
-    
+
     public boolean deleteCustomer() {
 
         boolean res = false;
@@ -454,19 +456,18 @@ public class CustomerRegistration extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Select Customer to Delete.");
 
         } else {
-            
-            
+
             int dialogButton = JOptionPane.YES_NO_OPTION;
             int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like to Delete the record ?", "Warning", dialogButton);
 
             if (dialogResult == JOptionPane.YES_OPTION) {
-            cusid = Integer.parseInt(txtCusId.getText());
-            
-            CustomerDAO customerInsert = new CustomerDAOImp();
-            res = customerInsert.deleteCustomer(cusid);
+                cusid = Integer.parseInt(txtCusId.getText());
+
+                CustomerDAO customerInsert = new CustomerDAOImp();
+                res = customerInsert.deleteCustomer(cusid);
             }
         }
-        
+
         return res;
     }
 
@@ -511,13 +512,12 @@ public class CustomerRegistration extends javax.swing.JPanel {
         dtm.setRowCount(0);
         int i = 1;
         for (Customer customer : list) {
-            
+
             Object[] obj = {i++, customer.getId(), customer.toString(), customer.getTelNoOne(), customer.getTelNoTwo()};
             dtm.addRow(obj);
         }
 
     }
-    
 
     public class ForcedListSelectionModel extends DefaultListSelectionModel {
 
@@ -535,8 +535,7 @@ public class CustomerRegistration extends javax.swing.JPanel {
 
     }
 
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
