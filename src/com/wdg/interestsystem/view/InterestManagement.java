@@ -351,7 +351,18 @@ public class InterestManagement extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+       //Deleting an exixting record
+        boolean res = deleteInterest();
+        if (res) {
+            clear();
+            loadList();
+
+            JOptionPane.showMessageDialog(null, "Record Deleted successfully.");
+
+        } else {
+            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -562,6 +573,7 @@ public class InterestManagement extends javax.swing.JPanel {
       public boolean editInterest() {
 
         boolean res = false;
+        boolean valid = false;
         int cusid = 0;
 
         if (txtID.getText().trim().equals("")) {
@@ -569,10 +581,10 @@ public class InterestManagement extends javax.swing.JPanel {
 
         } else {
             cusid = Integer.parseInt(txtID.getText());
+            valid = validateFields();
 
         }
 
-        boolean valid = validateFields();
 
         if (valid) {
 
@@ -612,6 +624,31 @@ public class InterestManagement extends javax.swing.JPanel {
     }
 
     
+      //dealiting an interest
+      public boolean deleteInterest() {
+
+        boolean res = false;
+        int intid = 0;
+
+        if (txtID.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Select Interest to Delete.");
+
+        } else {
+
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like to Delete the record ?", "Warning", dialogButton);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                intid = Integer.parseInt(txtID.getText());
+
+                InterestDAO InsertImp = new InterestDAOImp();
+                res = InsertImp.deleteInterest(intid);
+            }
+        }
+
+        return res;
+    }
+      
     
 
     public boolean validateFields() {

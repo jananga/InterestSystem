@@ -5,6 +5,7 @@
  */
 package com.wdg.interestsystem.view;
 
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.BoxLayout;
@@ -23,47 +24,14 @@ public class JFrameHome extends javax.swing.JFrame {
     GridBagLayout gbl = new GridBagLayout();
     CustomerRegistration customerManagement;
     InterestManagement interestManagement;
+    GridBagConstraints c;
     //ExpenceManager exManager;
 
     public JFrameHome() {
         initComponents();
-       this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
-        
-        customerManagement = new CustomerRegistration();
-        interestManagement = new InterestManagement();
-
-       // dynamicPanel.setLayout(new BoxLayout(dynamicPanel, BoxLayout.Y_AXIS));
-        //customerManagement.setBounds(0,0,400,400);
-
-        
-        /*
-        customerManagement.setLocation(0, 0);
-        customerManagement.setPreferredSize(new Dimension(900, 880));
-
-        interestManagement.setLocation(0, 0);
-        interestManagement.setPreferredSize(new Dimension(960, 880));
-
-        */
-        
-        /*
-        customerManagement.setPreferredSize(new Dimension(1000, 1000));
-        setSize(new Dimension(1000, 1000));
-        */
-        dynamicPanel.setLayout(gbl);
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-
-        dynamicPanel.add(customerManagement, c);
-
-        c.gridx = 0;
-        c.gridy = 0;
-        dynamicPanel.add(interestManagement, c);
-
-        customerManagement.setVisible(true);
-        interestManagement.setVisible(false);
+        changeDynamicPanel("");
     }
 
     /**
@@ -188,12 +156,16 @@ public class JFrameHome extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCustomerManagementActionPerformed
 
     private void btnCustomerManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerManagementActionPerformed
-        customerManagement.setVisible(true);
-        interestManagement.setVisible(false);    }//GEN-LAST:event_btnCustomerManagementActionPerformed
+
+        changeDynamicPanel("customer");
+
+		}//GEN-LAST:event_btnCustomerManagementActionPerformed
 
     private void btnInterestManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInterestManagementActionPerformed
-        customerManagement.setVisible(false);
-        interestManagement.setVisible(true);    }//GEN-LAST:event_btnInterestManagementActionPerformed
+
+        changeDynamicPanel("interest");
+
+		}//GEN-LAST:event_btnInterestManagementActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +200,58 @@ public class JFrameHome extends javax.swing.JFrame {
                 new JFrameHome().setVisible(true);
             }
         });
+    }
+
+    public void changeDynamicPanel(String page) {
+
+        /*
+        if(customerManagement != null){
+        customerManagement.setVisible(false);
+        interestManagement.setVisible(false);
+        dynamicPanel.removeAll();
+
+        }
+*/
+        customerManagement = null;
+        interestManagement = null;
+
+
+        c = null;
+        dynamicPanel.setLayout(gbl);
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+
+        c.gridx = 0;
+        c.gridy = 0;
+
+        switch (page) {
+            case "customer":
+                System.out.println("called");
+                customerManagement = null;
+                customerManagement = new CustomerRegistration();
+                dynamicPanel.add(customerManagement, c);
+                customerManagement.setVisible(true);
+
+                break;
+            case "interest":
+                interestManagement = null;
+                interestManagement = new InterestManagement();
+                dynamicPanel.add(interestManagement, c);
+                interestManagement.setVisible(true);
+                break;
+            case "dateView":
+
+                break;
+            default:
+                customerManagement = null;
+                customerManagement = new CustomerRegistration();
+                dynamicPanel.add(customerManagement, c);
+                customerManagement.setVisible(true);
+                break;
+
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

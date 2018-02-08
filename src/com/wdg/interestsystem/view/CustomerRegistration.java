@@ -409,16 +409,18 @@ public class CustomerRegistration extends javax.swing.JPanel {
 
         boolean res = false;
         int cusid = 0;
-
+         boolean valid = false;
+         
         if (txtCusId.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Select Customer to Update.");
 
         } else {
             cusid = Integer.parseInt(txtCusId.getText());
+                    valid = validateFields();
 
         }
 
-        boolean valid = validateFields();
+
 
         if (valid) {
 
