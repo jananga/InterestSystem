@@ -116,6 +116,11 @@ public class InterestManagement extends javax.swing.JPanel {
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnUpdate.setText("Edit");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAdd.setText("Insert");
@@ -350,6 +355,8 @@ public class InterestManagement extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+      
+        //Call Add Interest
         boolean res = addInterest();
         if (res) {
             clear();
@@ -389,6 +396,26 @@ public class InterestManagement extends javax.swing.JPanel {
     private void txtInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInstallmentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInstallmentActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+
+        //Call Edit Interest
+        boolean res = editInterest();
+          
+          
+        if (res) {
+            clear();
+            loadList();
+
+            JOptionPane.showMessageDialog(null, "Record Updated successfully.");
+
+        } else {
+            // JOptionPane.showMessageDialog(null, "Record insertion fail..");
+
+        }
+        
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void loadList() {
 
@@ -519,8 +546,8 @@ public class InterestManagement extends javax.swing.JPanel {
                 interests.setDescription(description);
                 interests.setAmount(amount);
 
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                interests.setDate(sqlDate);
+                //java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                interests.setDate(DateFunctions.createSQLDate(date));
 
                 InterestDAO InsertManage = new InterestDAOImp();
                 res = InsertManage.insertInterest(interests);
@@ -554,24 +581,28 @@ public class InterestManagement extends javax.swing.JPanel {
 
             if (dialogResult == JOptionPane.YES_OPTION) {
 
-                String name = cmbName.getSelectedItem().toString();
+                Customer name = (Customer) cmbName.getSelectedItem();
                 String amount = txtAmount.getText();
                 String interest = txtInterest.getText();
+                Date date = dateChooser.getDate();
+
                 String installment = txtInstallment.getText();
                 String description = txtDesc.getText();
 
-                /*
                 
                 Interest interests = new Interest();
                 interests.setId(cusid);
-                interests.setName(name);
-                interests.setTelNoOne(telNoOne);
-                interests.setTelNoTwo(telNoTwo);
+                interests.setCustomer(name);
+                interests.setAmount(Double.parseDouble(amount));
+                interests.setDate(DateFunctions.createSQLDate(date));
+                interests.setInterest(Double.parseDouble(interest));
+                interests.setInstallment(Double.parseDouble(installment));
+                interests.setDescription(description);
 
-                CustomerDAO customerInsert = new CustomerDAOImp();
-                res = customerInsert.updateCustomer(customer);
+                InterestDAO InterestImp = new InterestDAOImp();
+                res = InterestImp.updateInterest(interests);
 
-*/
+
             }
             // JOptionPane.showMessageDialog(null, "ok");
         }

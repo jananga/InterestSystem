@@ -42,5 +42,10 @@ public class DateFunctions {
         return ret;
 
     }
+    
+    public static java.sql.Date createSQLDate(Date date)
+    {
+            return new java.sql.Date(date.getTime());
 
+    }
 }
