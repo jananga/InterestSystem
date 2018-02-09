@@ -5,8 +5,6 @@
  */
 package com.wdg.interestsystem.view;
 
-import com.wdg.interestsystem.controller.CustomerDAO;
-import com.wdg.interestsystem.controller.CustomerDAOImp;
 import com.wdg.interestsystem.controller.InterestDAO;
 import com.wdg.interestsystem.controller.InterestDAOImp;
 import com.wdg.interestsystem.model.Customer;
@@ -14,12 +12,10 @@ import com.wdg.interestsystem.model.Interest;
 import com.wdg.interestsystem.util.DateFunctions;
 import com.wdg.interestsystem.util.NumericFunctions;
 import java.awt.Font;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListSelectionModel;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;

@@ -50,6 +50,7 @@ public class CustomerDAOImp implements CustomerDAO {
             } else {
                 ok = false;
             }
+            
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
