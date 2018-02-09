@@ -5,11 +5,8 @@
  */
 package javafxproject;
 
-import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -19,13 +16,6 @@ import javafx.fxml.Initializable;
  */
 public class FXMLController implements Initializable {
 
-    @FXML
-    private JFXButton btnCustomerManagement;
-    @FXML
-    private JFXButton btnInterestManagement;
-    @FXML
-    private JFXButton btnDailyInterest;
-
     /**
      * Initializes the controller class.
      */
@@ -33,17 +23,5 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
-    @FXML
-    private void btnCustomerManagement(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnInterestManagement(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnDailyInterest(ActionEvent event) {
-    }
     
 }
